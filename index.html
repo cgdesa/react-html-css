@@ -1,74 +1,116 @@
 <!doctype html>
 
 <html lang="pt-br">
+    <head>
+        <meta charset="utf-8">
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        >
+        <title>Chatbot</title>
+    </head>
+    <body>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot</title>
-</head>
+        <main id="container"></main>
 
-<body>
+        <script
+            crossorigin
+            src="https://unpkg.com/react@18/umd/react.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+        ></script>
+        <script
+            crossorigin
+            src="https://unpkg.com/@babel/standalone/babel.min.js"
+        ></script>
 
-    <main id="container"></main>
+        <script type="text/babel">
 
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+            function ChatInput() {
+                function showalert() {
+                    alert('Hello React!');
+                };
 
-    <script type="text/babel">
+                return (
+                    <div>
+                        <input
+                            type="text"
+                            placeholder="Send a message to Chatbot..."
+                            size="30"
+                        />
+                        <button>Send</button>
+                    </div>
+                );
+            };
 
-        function ChatInput() {
-            return (
-                <div>
-                    <input type="text" placeholder="Send a message to Chatbot" />
-                </div>
-            );
-        };
+            function ChatMessage({ message, sender }) {
+                return (
+                    <div>
+                        {sender === 'robot' && (
+                            <img src="./assets/robot.png" width="50" />
+                        )}
+                        {message}
+                        {sender === 'user' && (
+                            <img src="./assets/user.png" width="50" />
+                        )}
+                    </div>
+                );
+            };
 
-        function ChatMessage({message, sender}) {
+            function ChatMessages() {
+                const chatMessages = [
+                    {
+                        message: 'Hello!',
+                        sender: 'user',
+                        id: '001'
+                    }, {
+                        message: 'Hello! How can I help you?',
+                        sender: 'robot',
+                        id: '002'
+                    }, {
+                        message: 'Get date today!',
+                        sender: 'user',
+                        id: '003'
+                    }, {
+                        message: 'Today is September 25.',
+                        sender: 'robot',
+                        id: '004'
+                    }
+                ];
+                    function sendMessage() {
+                        chatMessages.push();
+                    }
 
-            // const { message, sender } = props;
+                return (
+                    <>
+                        <button onClick={sendMessage}>Send Message</button>
+                        {chatMessages.map(chatMessage => {
+                            return (
+                                <ChatMessage
+                                    message={chatMessage.message}
+                                    sender={chatMessage.sender}
+                                    key={chatMessage.id}
+                                />
+                            );
+                        })}
+                    </>
+                );
+            };
 
-            // if (sender === 'robot') {
-            //     return (
-            //         <div>
-            //             <img src="./assets/robot.png" width="50" />
-            //             {message}
-            //         </div>
-            //     )
+            function App() {
+                return (
+                    <>
+                        <ChatInput />
+                        <ChatMessages/>
+                    </>
+                );
+            };
 
-            // }
+            const container = document.querySelector('#container');
+            ReactDOM.createRoot(container).render(<App />);
 
-            return (
-                <div>
-                    {sender === 'user' &&  <img src="./assets/user.png" width="50" />}
-                    {message}
-                    {sender === 'robot' &&  <img src="./assets/robot.png" width="50" />}
-                </div>
-
-            );
-        };
-
-        function App() {
-            return (
-                <>
-                    <ChatInput />
-                    <ChatMessage message="Hello!" sender="user" />
-                    <ChatMessage message="Hello! How can I help you?" sender="robot" />
-                    <ChatMessage message="Get date today!" sender="user" />
-                    <ChatMessage message="Today is Septmber 25" sender="robot" />
-
-                </>
-            );
-        };
-
-        const container = document.querySelector('#container');
-        const root = ReactDOM.createRoot(container);
-        root.render(<App />);
-
-    </script>
-
-</body>
-
+        </script>
+    </body>
 </html>
